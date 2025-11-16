@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="style.css" rel="stylesheet"/>
+
+<script src="protokoll_funcs.js" defer="defer"></script>
+<script src="protokoll_data.js" defer="defer"></script>
+<script src="main.js" defer="defer"></script>
+<script src="funcs.js" defer="defer"></script>
+<script src="gfr.js" defer="defer"></script>
+<script src="vol.js" defer="defer"></script>
+<script src="prot.js" defer="defer"></script>
+<script>
+/*
+    Generic startup code
+*/
+
+
+/*
+ * This is called from body onload, and us used to initialize the page
+ */
+function initialize() {
+    // default method
+    // --------------
+    // Omnivis använder Lund-Malmö LBM (lean body mass) !!! Ändrat till denna metod.
+    // gfr_metod_info = "Estimerat relativt och absolut GFR baserat på kreatinin och estimerat rGFR enl. den reviderade Lund-Malmö-metoden.";
+    gfr_metod_info = "Estimerat relativt och absolut GFR baserat på kreatinin och estimerat aGFR enl. Lund-Malmö med lean body mass.";
+
+    /*
+     * Function "pointer" for calc gfr from kreat and data
+     * All functions to calculate gfr from kreat have the same interface and returns the same values
+     * Omivis uses Lund-Malmö lean body mass as std
+     */
+    //  kreat_gfr_func = wr_rgfr_revlm;
+    kreat_gfr_func = wr_agfr_lm;
+
+    get_form_elements();
+    prot_ini_select();
+    display_warning();
+    getParameters();
+    display_versions();
+
+    fgfr.gfr_form.addEventListener('change', gfr_change);
+    pf.pf_form.addEventListener('change', prot_change);
+    pd.pd_form.addEventListener('change', prot_pd_change);
+    document.getElementById("gfr_age").focus();
+}
+
+
+
+</script>
+
+</head>
+<body onload="initialize()">
+<div id="protocol_warning">Varning! En gammal protokollfil används.</div>
+
+<!-- rGFR, aGFR och BMI -->
+<div>
+    <h3>rGFR och aGFR estimerat från kreatinin-värde för vuxna 18 år och äldre samt barn 2 år och äldre.</h3>
+</div>
+<div class="info">
+<span id="version"></span>
+<!--
+Programmet kan med försiktighet användas för att beräkna relativt GFR för barn &ge; 2 år tillsammans med den reviderade LM-metoden.<br/>
+Omräkning mellan aGFR och rGFR sker m.h.a. uppskattad kroppsyta enl. du Bois och du Bois, vilket introducerar ytterligare viss osäkerhet.<br/>
+-->
+</div>
+<div class="parent">
+<div class="c1">
+    <form id="gfr_form" action="javascript:gfr_submit_gfr_form()">
+    <table>
+        <tr>
+            <td><label>Ålder (år)</label></td>
+            <td><input id="gfr_age" type="number" min="2" max="120" value="" /></td>      <!-- TODO: Min AGE? -->
+        </tr>
+        <tr>
+            <td><label>Längd (cm)</label></td>
+            <td><input id="gfr_height" type="number" min="50" max="215" value="" /></td>
+        </tr>
+        <tr>
+            <td><label>Vikt (kg)</label></td>
+            <!-- <td><input id="gfr_weight" type="number" min="5" max="250" value="" required="true"/></td> -->
+            <td><input id="gfr_weight" type="number" min="5" max="250" value="" required="true"/></td>
+        </tr>
+        <tr>
+            <td><label>Kreatinin (μmol/L)</label></td>
+            <td><input id="gfr_kreat" type="number" value="" min="10" max="800" /></td>  <!-- TODO: Min and max values  -->
+        </tr>
+        <tr>
+            <td><label>Kön</label></td>
+            <td><input id="gfr_sex_female" name="gfr_sexbtn" type="radio" value="0" checked  /><label>kvinna</label>       <!-- TODO: Min and max values  -->
+                <input id="gfr_sex_male" name="gfr_sexbtn" type="radio" value="1"  /><label>man</label></td>  <!-- TODO: Min and max values  -->
+        </tr>
+        <tr>
+            <td/>
+            <td><input type="submit" value="Beräkna"/>&nbsp;<input type="button" value="Rensa" onclick="gfr_resetgfrdata(true);"/></td>
+        </tr>
+    </table>
+    </form>
+</div>
+<div id="res1" class="r"></div>
+</div>
+
+<!-- Protokoll -->
+<hr/>
+<div>
+<h3>Protokoll</h3>
+</div>
+
+<div class="parent">
+    <div class="r1">
+        <div class="filtrera">
+            Filtrera:<br/>
+            <input type="text" style="width: 10em; text-align: left;" onchange="prot_filter_select(this)"/>
+        </div>
+        <form action="#">
+            <select id="pf_proto" name="pf_proto" size="20" onchange="prot_proto_sel(this);">
+            </select>
+        </form>
+        <div>
+            <input type="button" value="Rensa" onclick="prot_rensa_allt();">
+            <input type="button" value="Beslut" onclick="prot_genbeslut();">
+        </div>
+    </div>
+    <div class="r3">
+        <div id="prot_pddata">
+            <form id="pd_form" action="javascript:prot_pdform_submit();">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Vikt (kg)</th>
+                            <th>Längd (cm)</th>
+                            <th>BMI (kg/m<sup>2</sup>)</th>
+                            <th>aGFR (ml/min)</th>
+                            <th>rGFR (std enhet)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input id="pd_weight" type="text" min="5" max="250" pattern="\d*" readonly="true" /></td>
+                            <td><input id="pd_height" type="text" min="50" max="215" pattern="\d*" readonly="true" /></td>
+                            <td><input id="pd_bmi" type="number" readonly="true" tabindex="-1" data-exactval=""/></td>
+                            <td><input id="pd_agfr" type="number" readonly="true" tabindex="-1" data-exactval=""/></td>
+                            <td><input id="pd_rgfr" type="number" readonly="true" tabindex="-1" data-exactval=""/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+
+        <div class="parentb">
+           <div class="r2a">
+                <h4>Protokollparametrar</h4>
+                <form id="pf_form" action="javascript:prot_protocol_submit();">
+                    <table>
+                        <tr><td><label>Dos: </label></td><td><input id="pf_dos" name="pf_dos" type="number" min="0" max="999" required="true" /> mg jod/kg</td></tr>  <!-- TODO: may need to change values -->
+                        <tr><td><label>Koncentration: </label></td><td><input id="pf_konc" name="pf_konc" type="number" min="100" max="800" required="true" /> mg jod/ml</td></tr>
+                        <tr><td><label>Injektionstid: </label></td><td><input id="pf_tid" name="pf_tid" type="number" min="1" max="240" required="true" /> sekunder</td></tr>
+                        <tr><td><label>Doshastighet: </label></td><td><input id="pf_dosh" name="pf_dosh" type="number" min="1" max="240" step="0.1" tabindex="-1" readonly="true"/> mg jod/(kg*s)</td></tr>
+                        <tr><td><label>Maxvikt: </label></td><td><input id="pf_maxvikt" name="pf_maxvikt" type="number" min="1" max="150" required="true" /> kg
+                        <label>motsvarar: </label><input id="pf_maxvol" name="pf_maxvol" type="number" min="1" max="150" step="0.1" tabindex="-1" readonly="true" /> ml</td></tr>
+                        <tr><td></td><td><input type="submit" value="Beräkna" onchange="prot_reset_pf_forms();"/></td></tr>
+                    </table>
+                </form>
+                <h4>Injektionsparametrar</h4>
+                <!--
+                Since we have onchange=prot_ratio2dos for pf_pkvot, onchange will be called twice if we use enter! (once for the change and once for the submit)
+                <form id="pf_form2" action="javascript:prot_ratio2dos();">
+                -->
+                <form id="pf_form2">
+                    <table>
+                        <tr><td><label>Volym: </label></td><td><input id="pf_pvol" name="pf_pvol" type="number" min="1" max="500" step="0.1" tabindex="-1" readonly="true"/> ml (avrundat till närmaste ml)</td></tr>
+                        <tr><td><label>Injektionshastighet: </label></td><td><input id="pf_pinjh" name="pf_pinjh" type="number" min="0" max="6" step="0.1" tabindex="-1"  readonly="true"/> ml/s</td></tr>
+                        <tr><td><label>Dos: </label></td><td><input id="pf_pdos" name="pf_pdos" type="number" min="0" max="200" step="0.1" tabindex="-1" readonly="true"/> g jod</td></tr>
+                        <!-- -<tr><td><label>Gram jod/GFR-kvot: </label></td><td><input id="pf_pkvot" name="pf_pkvot" type="number" min="0.0" max="200.0" step="0.01" onchange="warning_pkvot_changed();"/> -->
+                        <tr><td><label>Gram jod/aGFR-kvot: </label></td><td><input id="pf_pkvot" name="pf_pkvot" type="number" min="0.0" max="200.0" step="0.01" onchange="prot_ratio2dos();"/> </td></tr>
+                        <tr><td></td>
+                            <!-- <td><input type="submit" value="Kvot till dos"/></td>   See above why we cant have this -->
+                            <td><input type="button" value="Kvot till dos" onclick="prot_ratio2dos();"/></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="r2">
+                <h4>Protokollinformation</h4>
+                <div id="p_info"></div>
+                <div id="p_specfunc"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div></div>
+
+
+<div>
+    <div id="beslut"></div>
+</div>
+
+
+
+<!-- Volym och kvoter av kontrast -->
+<hr/>
+<div>
+<h3>Volyms- och kvot-beräkning</h3>
+<!--
+Volym kontrastmedel av viss koncentration som motsvarar angiven "kvot",<br/>
+vilken kvot som fås av en viss volym kontrastmedel av angiven koncentration, samt vilken volym kontrastmedel<br/>
+av en given koncentration som motsvarar angiven kvot.<br/>
+Endast aGFR måste anges, men då fås inte all information.<br/><br/>
+-->
+<form action="javascript:volymer();">
+    <label>Absolut GFR (ml/min): </label><input type="number" id="vol_gfr" min="1" max="600" required="true"/> <!-- TODO: min och max. No std value -->
+    <label>Kvot: </label><input type="number" id="vol_kvot" min="0.01" max="4" value="1" step="any" required="true" /><br/> <!-- TODO: min och max. No std value -->
+    <label>Kontrasmedelsvolym (ml): </label><input type="number" id="vol_vol" min="0" max="300"/> <!-- TODO: min och max -->
+    <label>Koncentration (mg jod/ml): </label><input type="number" id="vol_konc" min="100" max="500" value="350"/><br/> <!-- TODO: min och max -->
+    <input type="submit" value="Beräkna"/>
+</form>
+<div id="res2">
+</div>
+</div>
+
+<br/>
+<br/>
+<hr/>
+<div id="footer">
+    (c) och utvecklat av Erik Persson, överläkare, Verksamhetsområde Diagnostik, Centralsjukhuset Kristianstad.
+</div>
+
+<pre id="copy-hidden"></pre>
+<pre id="copy1"></pre>
+</body>
+</html>
+

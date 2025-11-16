@@ -1,0 +1,140 @@
+
+body {
+    padding: 5px;
+}
+
+input {
+    text-align: right;
+}
+
+input[type="number"] {
+    width: 7em;
+}
+
+input[type="text"] {
+    width: 7em;
+}
+
+input[readonly] {
+    background: #eee;
+}
+
+h3 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+th {
+    text-align: left;
+    font-weight: normal;
+}
+
+.parent {
+    display: inline-flex;
+}
+
+.parentb {
+    display: inline-flex;
+    margin-top: 5px;
+}
+
+.filtrera {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.c1 {
+    min-height: 14em;
+}
+
+.r {
+    margin-left: 20px;
+    max-width: 60em;
+    min-width: 60em;
+    /* height: 40em; */
+}
+
+.r1 {
+    max-width: 12em;
+    min-width: 12em;
+}
+
+.r2a {
+    max-width: 30em;
+    min-width: 30em;
+}
+
+.r2 {
+    margin-left: 20px;
+    max-width: 30em;
+    min-width: 30em;
+}
+
+.r3 {
+    margin-left: 20px;
+    /* max-width: 60em;  */
+    min-width: 60em;
+}
+
+.hl {
+    background: #fbb;
+    font-weight: bold;
+}
+
+.info {
+    background: #eee;
+    margin-bottom: 20px;
+    /* margin-top: -10px; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: -5px;
+    padding-left: 5px;
+}
+
+#res1 {
+    line-height: 1.2;
+}
+
+#vol_kvot {   /* input of type number does not support size and maxwidth arguments */
+    width: 5em;
+}
+
+#p_specfunc {
+    margin-top: 0.5em;
+}
+
+#footer {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#copy1 {
+    display: none;
+}
+
+#copy-hidden {
+    display: none;
+}
+
+#protocol_warning {
+    background: red;
+    color: white;
+    font-size: 2em;
+    padding: 1em;
+    text-align: center;
+    display: none;
+}
+
+/* Make it possible to not show the pd form */
+#prot_pddata {
+    display: block;
+}
+
+
+
