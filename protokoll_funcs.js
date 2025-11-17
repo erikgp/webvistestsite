@@ -28,7 +28,7 @@ function pfunc_two_injections(e, resultat, pr, pd_obj, pf_obj) {
     const inj2_injh = (inj2_vol / inj2_tid).toFixed(1);
 
     let utstr = "<br/><b>Extra information</b><br/>Total kontrastmängd, " + vol + " ml, koncentration " + pf_obj.konc + " mg I/ml, ";
-    utstr += "att dela upp på 2 injektioner enligt ovan.<br/><br/>";
+    utstr += "ska delas upp på 2 injektioner enligt ovan.<br/><br/>";
     utstr += "<b>Inj 1</b>: Volym: " + (inj1_prop*100) + " % =<span class='hl'> " + inj1_vol + " ml, " + inj1_tid + " s</span>, Injektionshastighet: " + inj1_injh + " ml/s<br/><br/>";
     utstr += "<b>Inj 2</b>: Volym: " + (inj2_prop*100) + " % =<span class='hl'> " + inj2_vol + " ml, " + inj2_tid + " s</span>, Injektionshastighet: " + inj2_injh + " ml/s";
     e.innerHTML = utstr;

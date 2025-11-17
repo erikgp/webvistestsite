@@ -1,6 +1,6 @@
-protokoll_data_version = "2025-10-22";
+protokoll_data_version = "2025-11-09";
 // protokoll_data_latest = "2025-11-05";
-protokoll_data_latest = "2025-11-05";
+
 
 protokoll = [
 {
@@ -433,19 +433,19 @@ tags: "#ge#"
 },
 {
 name: "GE Aorta",
-dos: 300,
+dos: 340,
 konc: 350,
-tid: 15,
-maxvikt: 80,
-info: "DE:<br/>Radiolog kan beroende på klinisk frågeställning och njurfunktion reducera till minimum 150 mg jod/kg. Dock är minsta tillåtna hastigheten 2,0 ml/sek Omnipaque (2,2 ml/s Visipaque).  OBS! Vid reduktion av kontrast måste NI anpassas enligt tabell i metodboken.<br/><br/>XXL:<br/>80ml 5,3ml/sek Omnipaque <br/>(88ml 5,9ml/sek Visipaque)",
+tid: 17,
+maxvikt: 70,
+info: "DE:<br/>Radiolog kan beroende på klinisk frågeställning och njurfunktion reducera till minimum 150 mg jod/kg. Dock är minsta tillåtna hastigheten 2,0 ml/sek Omnipaque (2,2 ml/s Visipaque).  OBS! Vid reduktion av kontrast måste NI anpassas enligt tabell i metodboken.<br/><br/>XXL:<br/>90ml 5,3ml/sek Omnipaque <br/>(98ml 5,8ml/sek Visipaque)",
 tags: "#ge# #aorta#"
 },
 {
 name: "GE Aorta lungartärer",
-dos: 400,
+dos: 450,
 konc: 350,
 tid: 20,
-maxvikt: 80,
+maxvikt: 70,
 info: "DE:<br/>Radiolog kan beroende på klinisk frågeställning och njurfunktion reducera till minimum 200 mg jod/kg. Dock är minsta tillåtna hastigheten 2,0 ml/sek Omnipaque (2,2 ml/s Visipaque). OBS! Vid reduktion av kontrast måste NI anpassas enligt tabell i metodboken.<br/><br/>XXL &lt;40 år: <br/>140ml 7,0ml/sek Omnipaque <br/>(153ml 7,7ml/sek Visipaque)<br/><br/>XXL &gt;40år:<br/>130ml 6,5ml/sek Omnipaque <br/>(142ml 7,1ml/sek Visipaque)",
 tags: "#ge# #aorta# #lungartärer#"
 },
@@ -506,9 +506,9 @@ tags: "#ge# #angio#"
 {
 name: "GE Bukartärer",
 dos: 400,
-konc: 350,
+konc: 375,
 tid: 15,
-maxvikt: 80,
+maxvikt: 70,
 info: "DE:<br/>Radiolog kan beroende på klinisk frågeställning och njurfunktion reducera till minimum 200 mg jod/kg. Dock är minsta tillåtna hastigheten 2,0 ml/sek Omnipaque (2,2 ml/s Visipaque). OBS! Vid reduktion av kontrast måste NI anpassas enligt tabell i metodboken.<br/><br/>XXL: <br/>90ml 6,0ml/sek Omnipaque <br/>(98ml 6,5ml/sek Visipaque)",
 tags: "#ge# #angio#"
 },
@@ -585,20 +585,20 @@ tags: "#ge#"
 },
 {
 name: "GE Lungartärer",
-dos: 240,
+dos: 220,
 konc: 350,
-tid: 12,
+tid: 11,
 maxvikt: 70,
-info: "Ingen justering vid takykard på GE<br/><br/>DE:<br/>Radiolog kan beroende på klinisk frågeställning och njurfunktion reducera till minimum 120 mg jod/kg. Dock ska hastigheten minimum vara 2,0 ml/sek Omnipaque (2,2 ml/sek Visipaque). OBS! Vid reduktion av kontrast måste NI anpassas enligt tabell i metodboken.<br/><br/>XXL: <br/>80ml 6,7ml/sek Omnipaque <br/>(88ml 7,3ml/sek Visipaque)",
+info: "Ingen justering vid takykard på GE<br/><br/>DE:<br/>Radiolog kan beroende på klinisk frågeställning och njurfunktion reducera till minimum 120 mg jod/kg. Dock ska hastigheten minimum vara 2,0 ml/sek Omnipaque (2,2 ml/sek Visipaque). OBS! Vid reduktion av kontrast måste NI anpassas enligt tabell i metodboken.<br/><br/>XXL: <br/>74ml 6,4ml/sek Omnipaque <br/>(81ml 7,3ml/sek Visipaque)",
 tags: "#ge# #lungartärer#"
 },
 {
 name: "GE Lungartärer &lt;40år/gravid",
-dos: 290,
+dos: 270,
 konc: 350,
-tid: 13,
+tid: 12,
 maxvikt: 70,
-info: "Ingen justering vid takykard på GE<br/><br/>DE:<br/>Radiolog kan beroende på klinisk frågeställning och njurfunktion reducera till minimum 150 mg jod/kg. Dock ska hastigheten minimum vara 2,0 ml/sek Omnipaque (2,2 ml/sek Visipaque). OBS! Vid reduktion av kontrast måste NI anpassas enligt tabell i metodboken.<br/><br/>XXL: <br/>95ml 7,3ml/sek Omnipaque <br/>(103ml 7,9ml/sek Visipaque)",
+info: "Ingen justering vid takykard på GE<br/><br/>DE:<br/>Radiolog kan beroende på klinisk frågeställning och njurfunktion reducera till minimum 150 mg jod/kg. Dock ska hastigheten minimum vara 2,0 ml/sek Omnipaque (2,2 ml/sek Visipaque). OBS! Vid reduktion av kontrast måste NI anpassas enligt tabell i metodboken.<br/><br/>XXL: <br/>88ml 7,3ml/sek Omnipaque <br/>(96ml 8,0ml/sek Visipaque)",
 tags: "#ge# #lungartärer#"
 },
 {
@@ -672,6 +672,19 @@ tid: 20,
 maxvikt: 80,
 info: "",
 tags: "#pet#"
+},
+/* NEDAN ÄR ETT TEST */
+/*
+{
+name: "DTA hals hjärna artärer",
+dos: 21000,
+// dos: 61000,      // Problem here! We MUST ENSURE THAT VALUES ARE CORRECT IN THE protocol file
+konc: 350,
+tid: 12,
+maxvikt: 1,
+info: "<b>Standard: 60 ml omnipaque 350 mg I/ml, 5 ml/s.</b><br/>Alternativt: 65 ml visipaque 320 mg I/ml, 5,4 ml/s.",
+tags: "#siemens#"
 }
+*/
 ];
 
