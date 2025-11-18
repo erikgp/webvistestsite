@@ -139,8 +139,10 @@ function prot_reset_pd_form() {
  */
 
 function prot_change_conc(i) {
-    pf.pf_konc.value = i;
-    prot_recalc();
+    if ( parseInt(pf.pf_konc.value) ) {  // only update if we have a value - to reduce risk for misinterpreation of how it works
+        pf.pf_konc.value = i;
+        prot_recalc();
+    }
 }
 
 
