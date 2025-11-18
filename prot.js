@@ -133,6 +133,16 @@ function prot_reset_pd_form() {
 }
 
 
+/* --------------------------------------
+ * Code for for faster change of conc
+ * --------------------------------------
+ */
+
+function prot_change_conc(i) {
+    pf.pf_konc.value = i;
+    prot_recalc();
+}
+
 
 /* -------------------------------------------------------------------
  * Code for protocol selection box 

@@ -44,7 +44,7 @@ th {
 }
 
 .filtrera {
-    margin-top: 5px;
+    /* margin-top: 5px; */
     margin-bottom: 5px;
     line-height: 1.4;
 }
@@ -80,6 +80,12 @@ th {
     margin-left: 20px;
     /* max-width: 60em;  */
     min-width: 60em;
+    margin-top: 0;
+}
+
+.r4 {
+    margin-top: 1em;
+    /* display: none; */
 }
 
 .hl {

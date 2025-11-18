@@ -104,8 +104,36 @@ Omräkning mellan aGFR och rGFR sker m.h.a. uppskattad kroppsyta enl. du Bois oc
 
 <!-- Protokoll -->
 <hr/>
-<div>
-<h3>Protokoll</h3>
+<div class="parent">
+    <div class="r1">
+        <h3 class="r1">Protokoll</h3>
+    </div>
+    <div class="r3">
+        <div id="prot_pddata">
+            <form id="pd_form" action="javascript:prot_pdform_submit();">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Vikt (kg)</th>
+                            <th>Längd (cm)</th>
+                            <th>BMI (kg/m<sup>2</sup>)</th>
+                            <th>aGFR (ml/min)</th>
+                            <th>rGFR (std enhet)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input id="pd_weight" type="text" min="5" max="250" pattern="\d*" readonly="true" tabindex="-1"/></td>
+                            <td><input id="pd_height" type="text" min="50" max="215" pattern="\d*" readonly="true" tabindex="-1"/></td>
+                            <td><input id="pd_bmi" type="number" readonly="true" tabindex="-1" data-exactval=""/></td>
+                            <td><input id="pd_agfr" type="number" readonly="true" tabindex="-1" data-exactval=""/></td>
+                            <td><input id="pd_rgfr" type="number" readonly="true" tabindex="-1" data-exactval=""/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div class="parent">
@@ -124,31 +152,6 @@ Omräkning mellan aGFR och rGFR sker m.h.a. uppskattad kroppsyta enl. du Bois oc
         </div>
     </div>
     <div class="r3">
-        <div id="prot_pddata">
-            <form id="pd_form" action="javascript:prot_pdform_submit();">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Vikt (kg)</th>
-                            <th>Längd (cm)</th>
-                            <th>BMI (kg/m<sup>2</sup>)</th>
-                            <th>aGFR (ml/min)</th>
-                            <th>rGFR (std enhet)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><input id="pd_weight" type="text" min="5" max="250" pattern="\d*" readonly="true" /></td>
-                            <td><input id="pd_height" type="text" min="50" max="215" pattern="\d*" readonly="true" /></td>
-                            <td><input id="pd_bmi" type="number" readonly="true" tabindex="-1" data-exactval=""/></td>
-                            <td><input id="pd_agfr" type="number" readonly="true" tabindex="-1" data-exactval=""/></td>
-                            <td><input id="pd_rgfr" type="number" readonly="true" tabindex="-1" data-exactval=""/></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-        </div>
-
         <div class="parentb">
            <div class="r2a">
                 <h4>Protokollparametrar</h4>
@@ -181,6 +184,10 @@ Omräkning mellan aGFR och rGFR sker m.h.a. uppskattad kroppsyta enl. du Bois oc
                         </tr>
                     </table>
                 </form>
+        <div class="r4">
+            <input type="button" value="=&gt; Omnip. 350 mg I/ml" onclick="prot_change_conc(350);"/>
+            <input type="button" value="=&gt; Visip. 320 mg I/ml" onclick="prot_change_conc(320);"/>
+        </div>
             </div>
             <div class="r2">
                 <h4>Protokollinformation</h4>
@@ -189,6 +196,8 @@ Omräkning mellan aGFR och rGFR sker m.h.a. uppskattad kroppsyta enl. du Bois oc
             </div>
         </div>
     </div>
+
+
 </div>
 
 <div></div>

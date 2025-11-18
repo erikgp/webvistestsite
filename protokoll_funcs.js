@@ -21,10 +21,12 @@ function pfunc_two_injections(e, resultat, pr, pd_obj, pf_obj) {
     const vikt = Math.min(pd_obj.weight, pf_obj.maxvikt);
     const vol = Math.round(vikt * pf_obj.dos / pf_obj.konc);
 
-    const inj1_vol = Math.floor(vol * inj1_prop);
+    // const inj1_vol = Math.floor(vol * inj1_prop);
+    const inj1_vol = Math.round(vol * inj1_prop);
     const inj1_injh = (inj1_vol / inj1_tid).toFixed(1);
 
-    const inj2_vol = Math.ceil(vol * inj2_prop);
+    // const inj2_vol = Math.ceil(vol * inj2_prop);
+    const inj2_vol = Math.round(vol * inj2_prop);
     const inj2_injh = (inj2_vol / inj2_tid).toFixed(1);
 
     let utstr = "<br/><b>Extra information</b><br/>Total kontrastmängd, " + vol + " ml, koncentration " + pf_obj.konc + " mg I/ml, ";
