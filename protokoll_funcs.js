@@ -12,6 +12,8 @@
  * Funktionerns ska inte returnera något
  */
 
+'use strict';
+
 function pfunc_two_injections(e, resultat, pr, pd_obj, pf_obj) {
     const inj1_tid = pr.pfunc_args.inj1_time;
     const inj2_tid = pr.pfunc_args.inj2_time;

@@ -11,6 +11,7 @@
  * (The same function signature...)
  */
 
+'use strict';
 
 /*
  * There is a small risk that the values in the gfr form does not correspond to the values used to
@@ -46,7 +47,7 @@ const res = {
 }
 
 // If we have data in the res1 div or not
-res1_filled = false;
+let res1_filled = false;
 
 
 /*
@@ -130,7 +131,7 @@ function gfr_submit_gfr_form() {
         }
 
         // bmi
-        let bmi = calc_bmi(res.vikt, res.langd);
+        const bmi = calc_bmi(res.vikt, res.langd);
 
         // populate res global with calculated values
         res.rgfr_e = temp_rgfr;
@@ -273,7 +274,7 @@ function gfr_resultat2() {
  * Set on the form (and changes in input elements bubble up to this)
  */
 function gfr_change(e) {
-    let el = e.target;
+    const el = e.target;
 
     res.up2date = false;
     gfr_clear_gfr();

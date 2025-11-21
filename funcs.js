@@ -23,6 +23,8 @@
  * Generally better to have ONE wrapper function with parameters...
  */
 
+'use strict';
+
 
 /*
  * Calculate BMI.
@@ -91,7 +93,7 @@ function ibw_devine(langd, sex) {
  * Returns: body area (m^2)
  */
 function calc_kroppsyta(m, h) {
-    let ky = (m**0.425 * h**0.725) * 0.007184;
+    const ky = (m**0.425 * h**0.725) * 0.007184;
     return ky;
 }
 
@@ -104,7 +106,7 @@ function calc_kroppsyta(m, h) {
  * Returns: kreatinine konc  (umol/L)  (float)
  */
 function creat_konc_conv(kreat) {
-    let mw = 113.120;   // g*mol^(-1)
+    const mw = 113.120;   // g*mol^(-1)
     // kreat (umol/L) = kreat (mg/dl) / 1000 (mg/g) * 10 (dl/L) / mw (g/mol) * 1000000 (umol/mol) = kreat (mg/dl) * 10000 / mw (g/mol) 
     return kreat * 10000 / mw;
 }
@@ -123,7 +125,7 @@ function creat_konc_conv(kreat) {
  * Returns aGFR (ml/min)
  */
 function agfr_cockgault(age, vikt, kreat, sex) {
-    let agfr = 1.23 * (( 140 - age) * vikt/kreat) * (1 - sex) * 0.85;
+    const agfr = 1.23 * (( 140 - age) * vikt/kreat) * (1 - sex) * 0.85;
     return agfr;
 }
 
@@ -133,8 +135,8 @@ function agfr_cockgault(age, vikt, kreat, sex) {
  * WRAPPER
  */
 function wr_agfr_cockgault(age, vikt, langd, kreat, sex, etn = 0) {
-    let agfr = agfr_cockgault(age, vikt, kreat, sex);
-    let ky = calc_kroppsyta(vikt, langd);
+    const agfr = agfr_cockgault(age, vikt, kreat, sex);
+    const ky = calc_kroppsyta(vikt, langd);
     return [agfr, agfr_to_rgfr(agfr, ky), ky];
 }
 
@@ -165,8 +167,8 @@ function agfr_lm(age, lbm, kreat) {
  * WRAPPER
  */
 function wr_agfr_lm(age, vikt, langd, kreat, sex, etn=0) {
-    let agfr = agfr_lm(age, lean_body_mass(vikt, langd, sex), kreat);
-    let ky = calc_kroppsyta(vikt, langd);
+    const agfr = agfr_lm(age, lean_body_mass(vikt, langd, sex), kreat);
+    const ky = calc_kroppsyta(vikt, langd);
     return [agfr, agfr_to_rgfr(agfr, ky), ky];
 } 
 
@@ -197,8 +199,8 @@ function rgfr_mdrd(age, kreat, sex, etn = 0) {
  * WRAPPER
  */
 function wr_rgfr_mdrd(age, vikt, langd, kreat, sex, etn=0) {
-    let x = rgfr_mdrd(age, kreat, sex, etn);
-    let ky = calc_kroppsyta(vikt, langd);
+    const x = rgfr_mdrd(age, kreat, sex, etn);
+    const ky = calc_kroppsyta(vikt, langd);
     return [ rgfr_to_agfr(x, ky), x, ky];
 }
 
@@ -244,8 +246,8 @@ function rgfr_ckd_kreat(age, kreat, sex, etn = 0) {
  * WRAPPER
  */
 function wr_rgfr_ckd_kreat(age, vikt, langd, kreat, sex, etn=0) {
-    let x = rgfr_ckd_kreat(age, kreat, sex, etn);
-    let ky = calc_kroppsyta(vikt, langd);
+    const x = rgfr_ckd_kreat(age, kreat, sex, etn);
+    const ky = calc_kroppsyta(vikt, langd);
     return [ rgfr_to_agfr(x, ky), x, ky];
 }
 
@@ -260,7 +262,7 @@ function wr_rgfr_ckd_kreat(age, vikt, langd, kreat, sex, etn=0) {
  * Returns rGFR (ml/(min*1,73 m2)
  */
 function rgfr_capa(age, cysc) {
-    let x = 130 * cysc**(-1.069) * age**(-0.117) - 7.0;
+    const x = 130 * cysc**(-1.069) * age**(-0.117) - 7.0;
     return x;
 }
 
@@ -270,8 +272,8 @@ function rgfr_capa(age, cysc) {
  * WRAPPER
  */
 function wr_rgfr_capa(age, vikt, langd, cysc, sex = 0, etn = 0) {
-    let x = rgfr_capa(age, cysc);
-    let ky = calc_kroppsyta(vikt, langd);
+    const x = rgfr_capa(age, cysc);
+    const ky = calc_kroppsyta(vikt, langd);
     return [ rgfr_to_agfr(x, ky), x, ky];
 }
 
@@ -307,8 +309,8 @@ function rgfr_ckd_cysc(age, cysc, sex) {
  * WRAPPER
  */
 function wr_rgfr_ckd_cysc(age, vikt, langd, cysc, sex, etn = 0) {
-    let x = rgfr_ckd_cysc(age, cysc, sex);
-    let ky = calc_kroppsyta(vikt, langd);
+    const x = rgfr_ckd_cysc(age, cysc, sex);
+    const ky = calc_kroppsyta(vikt, langd);
     return [ rgfr_to_agfr(x, ky), x, ky];
 }
 
@@ -343,7 +345,7 @@ function rgfr_revlm(age, kreat, sex) {
         }
     }
     // rGFR = ml/(min*1.73 m^2)
-    let temp_rgfr = Math.exp(x - 0.0158 * age + 0.438 * Math.log(age));
+    const temp_rgfr = Math.exp(x - 0.0158 * age + 0.438 * Math.log(age));
 
     return temp_rgfr;
 }
@@ -355,8 +357,8 @@ function rgfr_revlm(age, kreat, sex) {
  * WRAPPER
  */
 function wr_rgfr_revlm(age, vikt, langd, kreat, sex, e=0) {
-    let temp_rgfr = rgfr_revlm(age, kreat, sex);
-    let ky = calc_kroppsyta(vikt, langd);
+    const temp_rgfr = rgfr_revlm(age, kreat, sex);
+    const ky = calc_kroppsyta(vikt, langd);
     return [ rgfr_to_agfr(temp_rgfr, ky), temp_rgfr, ky];
 }
 

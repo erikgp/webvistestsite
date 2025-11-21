@@ -5,12 +5,13 @@
  * -----------------------------------------------------------------------
  */
 
+'use strict';
 
 /*
  * Contrast concentrations for which volume of contrast agent should be displayed
  * Below are all the concentrations of omnipaque and visipaque in FASS - however we only use 320 mg/ml and 350 mg/ml
  */
-kontrastkonc = [  // mg I/ml kontrastmedel
+const kontrastkonc = [  // mg I/ml kontrastmedel
 //    140,      // Omnipaque, iohexanol
 //    180,      // Omnipaque, iohexanol
 //    240,      // Omnipaque, iohexanol

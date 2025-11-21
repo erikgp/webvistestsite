@@ -103,6 +103,10 @@ th {
     padding-left: 5px;
 }
 
+#pf_proto {
+    min-width: 14em;
+}
+
 #res1 {
     line-height: 1.2;
 }
