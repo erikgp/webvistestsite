@@ -74,6 +74,8 @@ th {
     margin-left: 20px;
     max-width: 30em;
     min-width: 30em;
+    border-left: 1px solid black;
+    padding-left: 0.7em;
 }
 
 .r3 {
